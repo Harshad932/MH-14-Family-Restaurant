@@ -1,5 +1,15 @@
 import React, { useState } from 'react';
-import { ShoppingBag, Menu as MenuIcon, X, Phone, Clock, MapPin, Sparkles, ChevronRight } from 'lucide-react';
+import {
+  ShoppingBag,
+  Menu as MenuIcon,
+  X,
+  Phone,
+  Clock,
+  MapPin,
+  Sparkles,
+  ChevronRight
+} from 'lucide-react';
+import { InstagramIcon, YoutubeIcon } from './SocialIcons';
 import { restaurantInfo } from '../data/restaurantInfo';
 
 export default function Navbar({
@@ -16,7 +26,6 @@ export default function Navbar({
     { id: 'home', label: 'Home' },
     { id: 'menu', label: 'Food Menu' },
     { id: 'thalis', label: 'Special Thalis' },
-    { id: 'about', label: 'About Us' },
     { id: 'contact', label: 'Contact & Timings' },
   ];
 
@@ -24,7 +33,6 @@ export default function Navbar({
     setActiveTab(id);
     setMobileMenuOpen(false);
     
-    // Smooth scroll to section if already on home or navigate
     const el = document.getElementById(id);
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
@@ -34,32 +42,51 @@ export default function Navbar({
   return (
     <header className="sticky top-0 z-40 bg-[#fdfdfb]/95 backdrop-blur-md border-b border-stone-200/80 shadow-soft transition-all">
       {/* Top micro banner for dine-in quick info */}
-      <div className="hidden sm:block bg-amber-50/80 border-b border-amber-100/60 py-1 px-4 text-xs text-stone-600">
+      <div className="hidden sm:block bg-amber-50/80 border-b border-amber-100/60 py-1.5 px-4 text-xs text-stone-600">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <span className="flex items-center gap-1 font-medium text-amber-800">
+            <span className="flex items-center gap-1.5 font-semibold text-amber-900">
               <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-              MH 14 Family Restaurant • Dine-in & Family Seating
+              MH 14 Family Restaurant • Lonavala
             </span>
-            <span className="hidden md:inline text-stone-400">|</span>
+            <span className="hidden md:inline text-stone-300">|</span>
             <span className="hidden md:flex items-center gap-1">
-              <Clock className="w-3 h-3 text-stone-500" />
+              <Clock className="w-3.5 h-3.5 text-stone-500" />
               {restaurantInfo.timing}
             </span>
           </div>
-          <div className="flex items-center gap-3">
+
+          <div className="flex items-center gap-4">
+            {/* Social media icons without external links */}
+            <div className="flex items-center gap-2">
+              <span className="text-[11px] text-stone-400 font-medium">Follow:</span>
+              <button
+                type="button"
+                className="w-5 h-5 rounded flex items-center justify-center text-pink-600 hover:text-pink-700 transition-colors cursor-default"
+                title="Instagram"
+                aria-label="Instagram"
+              >
+                <InstagramIcon className="w-3.5 h-3.5" />
+              </button>
+              <button
+                type="button"
+                className="w-5 h-5 rounded flex items-center justify-center text-red-600 hover:text-red-700 transition-colors cursor-default"
+                title="YouTube"
+                aria-label="YouTube"
+              >
+                <YoutubeIcon className="w-3.5 h-3.5" />
+              </button>
+            </div>
+
+            <span className="text-stone-300">•</span>
+
             <a
-              href={`tel:${restaurantInfo.phone}`}
-              className="flex items-center gap-1 hover:text-amber-800 font-medium transition-colors"
+              href={`tel:${restaurantInfo.phoneRaw}`}
+              className="flex items-center gap-1 font-semibold text-brand-800 hover:underline transition-colors"
             >
-              <Phone className="w-3 h-3 text-amber-600" />
+              <Phone className="w-3.5 h-3.5 text-amber-600" />
               {restaurantInfo.phone}
             </a>
-            <span className="text-stone-400">•</span>
-            <span className="flex items-center gap-1 text-stone-600">
-              <MapPin className="w-3 h-3 text-amber-600" />
-              {restaurantInfo.shortLocation}
-            </span>
           </div>
         </div>
       </div>
@@ -85,8 +112,8 @@ export default function Navbar({
                 <span className="text-lg sm:text-2xl font-bold tracking-tight text-stone-900 font-display">
                   MH 14
                 </span>
-                <span className="text-xs uppercase tracking-widest px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 font-semibold">
-                  PCMC
+                <span className="text-[10px] sm:text-xs uppercase tracking-wider px-1.5 py-0.2 rounded bg-amber-100 text-amber-900 font-bold">
+                  Lonavala
                 </span>
               </div>
               <span className="text-xs sm:text-sm font-medium text-stone-600 -mt-0.5">
@@ -96,7 +123,7 @@ export default function Navbar({
           </button>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
+          <nav className="hidden md:flex items-center gap-1 lg:gap-2">
             {navLinks.map((link) => {
               const isActive = activeTab === link.id;
               return (
@@ -105,7 +132,7 @@ export default function Navbar({
                   onClick={() => handleNavClick(link.id)}
                   className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-150 ${
                     isActive
-                      ? 'bg-amber-100/70 text-amber-900 shadow-xs font-semibold'
+                      ? 'bg-amber-100/80 text-amber-900 shadow-xs font-semibold'
                       : 'text-stone-600 hover:text-stone-900 hover:bg-stone-100/70'
                   }`}
                 >
@@ -132,9 +159,9 @@ export default function Navbar({
             {/* View Order Drawer Button */}
             <button
               onClick={onOpenOrder}
-              className={`relative flex items-center gap-2 px-3.5 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${
+              className={`relative flex items-center gap-2 px-3 sm:px-3.5 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${
                 cartCount > 0
-                  ? 'bg-brand-600 hover:bg-brand-700 text-white shadow-card hover:shadow-float active:scale-98'
+                  ? 'bg-brand-600 hover:bg-brand-700 text-white shadow-card active:scale-98'
                   : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
               }`}
               aria-label="View Order"
@@ -160,7 +187,7 @@ export default function Navbar({
             {/* Mobile Hamburger Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 rounded-lg text-stone-600 hover:text-stone-900 hover:bg-stone-100 focus:outline-none"
+              className="md:hidden p-2 rounded-lg text-stone-600 hover:text-stone-900 hover:bg-stone-100 focus:outline-none"
               aria-label="Toggle Navigation Menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}
@@ -172,7 +199,7 @@ export default function Navbar({
 
       {/* Mobile Drawer Dropdown */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-white border-b border-stone-200 px-4 pt-3 pb-5 shadow-lg animate-fadeIn">
+        <div className="md:hidden bg-white border-b border-stone-200 px-4 pt-3 pb-5 shadow-lg animate-fadeIn">
           <div className="space-y-1">
             {navLinks.map((link) => (
               <button
@@ -190,7 +217,7 @@ export default function Navbar({
             ))}
           </div>
 
-          <div className="mt-4 pt-4 border-t border-stone-100 flex flex-col gap-2 text-xs text-stone-600">
+          <div className="mt-4 pt-4 border-t border-stone-100 flex flex-col gap-2.5 text-xs text-stone-600">
             <div className="flex items-center gap-2">
               <Clock className="w-4 h-4 text-amber-600 shrink-0" />
               <span>Timings: {restaurantInfo.timing}</span>
@@ -199,13 +226,42 @@ export default function Navbar({
               <MapPin className="w-4 h-4 text-amber-600 shrink-0" />
               <span>{restaurantInfo.location}</span>
             </div>
-            <a
-              href={`tel:${restaurantInfo.phone}`}
-              className="flex items-center gap-2 text-brand-700 font-semibold mt-1"
-            >
-              <Phone className="w-4 h-4 text-brand-600 shrink-0" />
-              <span>Call: {restaurantInfo.phone}</span>
-            </a>
+
+            {/* Socials on mobile */}
+            <div className="flex items-center gap-3 pt-1">
+              <span className="text-stone-500 font-medium">Follow:</span>
+              <button
+                type="button"
+                className="flex items-center gap-1 text-pink-600 font-semibold cursor-default"
+              >
+                <InstagramIcon className="w-4 h-4" />
+                <span>Instagram</span>
+              </button>
+              <button
+                type="button"
+                className="flex items-center gap-1 text-red-600 font-semibold cursor-default"
+              >
+                <YoutubeIcon className="w-4 h-4" />
+                <span>YouTube</span>
+              </button>
+            </div>
+
+            <div className="flex flex-col gap-1 pt-2">
+              <a
+                href={`tel:${restaurantInfo.phoneRaw}`}
+                className="flex items-center gap-2 text-brand-700 font-bold"
+              >
+                <Phone className="w-4 h-4 text-brand-600 shrink-0" />
+                <span>Call: {restaurantInfo.phone}</span>
+              </a>
+              <a
+                href={`tel:${restaurantInfo.altPhoneRaw}`}
+                className="flex items-center gap-2 text-stone-700 font-bold"
+              >
+                <Phone className="w-4 h-4 text-stone-500 shrink-0" />
+                <span>Call: {restaurantInfo.altPhone}</span>
+              </a>
+            </div>
           </div>
         </div>
       )}
